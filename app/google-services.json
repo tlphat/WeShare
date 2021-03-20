@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "158191250324",
+    "firebase_url": "https://chatapp-weshare-default-rtdb.firebaseio.com",
+    "project_id": "chatapp-weshare",
+    "storage_bucket": "chatapp-weshare.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:158191250324:android:b84ac12714088fd733bd81",
+        "android_client_info": {
+          "package_name": "com.hcmus.android.weshare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "158191250324-ss8tcp2kl959tmu5b2klfi9j5qfcbbvd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDj_YAl3Gfmq8cS7I3_hHNvRERsW_07DI0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "158191250324-ss8tcp2kl959tmu5b2klfi9j5qfcbbvd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

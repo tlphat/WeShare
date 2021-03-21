@@ -1,24 +1,19 @@
 package com.hcmus.android.weshare;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-import com.hcmus.android.weshare.viewmodel.RegisterViewModel;
-
-import static androidx.lifecycle.ViewModelProvider.*;
+import com.hcmus.android.weshare.viewmodel.AuthenticationViewModel;
 
 public class RegisterActivity extends AppCompatActivity {
 
     private EditText emailEditText;
     private EditText passwordEditText;
 
-    private RegisterViewModel registerViewModel;
+    private AuthenticationViewModel authenticationViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

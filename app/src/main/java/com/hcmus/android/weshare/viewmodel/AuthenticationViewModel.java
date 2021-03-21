@@ -7,8 +7,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import com.google.firebase.auth.FirebaseUser;
+import com.hcmus.android.weshare.RegisterActivity;
 import com.hcmus.android.weshare.repository.AuthenticationRepository;
 
 public class AuthenticationViewModel extends AndroidViewModel {
@@ -24,13 +26,11 @@ public class AuthenticationViewModel extends AndroidViewModel {
 
     @RequiresApi(api = Build.VERSION_CODES.P)
     public void register(String email, String password) {
-        // TODO: Validate the input strings here
         authenticationRepository.register(email, password);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.P)
     public void login(String email, String password) {
-        // TODO: Validate the input strings here
         authenticationRepository.login(email, password);
     }
 

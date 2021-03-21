@@ -45,4 +45,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'org.projectlombok:lombok:1.18.18'
     annotationProcessor 'org.projectlombok:lombok:1.18.18'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 }

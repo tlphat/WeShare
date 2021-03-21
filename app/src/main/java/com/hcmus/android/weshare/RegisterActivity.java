@@ -1,11 +1,17 @@
 package com.hcmus.android.weshare;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseUser;
 import com.hcmus.android.weshare.viewmodel.AuthenticationViewModel;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -25,14 +31,32 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void initViewModel() {
         // TODO: init view model
+        authenticationViewModel = new ViewModelProvider(this).get(AuthenticationViewModel.class);
+
         // TODO: add observe behavior for the Mutable Live Data
+        authenticationViewModel.getUserMutableLiveData().observe(RegisterActivity.this, new Observer<FirebaseUser>() {
+            @Override
+            public void onChanged(FirebaseUser firebaseUser) {
+                if (firebaseUser != null) {
+                    Toast.makeText(RegisterActivity.this, "Mutable live data", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     private void initComponents() {
-        // TODO: init EditText fields
+        emailEditText = findViewById(R.id.register_email_edit_text);
+        passwordEditText = findViewById(R.id.register_email_edit_text);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.P)
     public void registerButtonClick(View view) {
         // TODO: Get the email and password, call the appropriate register function
+        String email = emailEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
+
+        if (email.length() > 0 && password.length() > 0) {
+            authenticationViewModel.register(email, password);
+        }
     }
 }

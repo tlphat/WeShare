@@ -6,6 +6,7 @@ import android.os.Build;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
@@ -16,7 +17,7 @@ import com.hcmus.android.weshare.repository.AuthenticationRepository;
 public class AuthenticationViewModel extends AndroidViewModel {
 
     private final AuthenticationRepository authenticationRepository;
-    private final MutableLiveData<FirebaseUser> userMutableLiveData;
+    private final LiveData<FirebaseUser> userMutableLiveData;
 
     public AuthenticationViewModel(@NonNull Application application) {
         super(application);
@@ -34,7 +35,7 @@ public class AuthenticationViewModel extends AndroidViewModel {
         authenticationRepository.login(email, password);
     }
 
-    public MutableLiveData<FirebaseUser> getUserMutableLiveData() {
+    public LiveData<FirebaseUser> getUserMutableLiveData() {
         return userMutableLiveData;
     }
 }

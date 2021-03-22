@@ -32,12 +32,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void initViewModel() {
         authenticationViewModel = new ViewModelProvider(this).get(AuthenticationViewModel.class);
-        authenticationViewModel.getUserMutableLiveData().observe(this, new Observer<FirebaseUser>() {
-            @Override
-            public void onChanged(FirebaseUser firebaseUser) {
-                if (firebaseUser != null) {
-                    Toast.makeText(MainActivity.this, "Mutable live data", Toast.LENGTH_LONG).show();
-                }
+        authenticationViewModel.getUserMutableLiveData().observe(this, firebaseUser -> {
+            if (firebaseUser != null) {
+                Toast.makeText(MainActivity.this, "Mutable live data", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -58,10 +55,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void signUpButtonClick(View view) {
-        navigateToRegister();
+        navigateToRegisterActivity();
     }
 
-    public void navigateToRegister() {
+    public void navigateToRegisterActivity() {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }

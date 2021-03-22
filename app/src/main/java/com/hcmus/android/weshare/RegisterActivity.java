@@ -32,12 +32,9 @@ public class RegisterActivity extends AppCompatActivity {
     private void initViewModel() {
         authenticationViewModel = new ViewModelProvider(this).get(AuthenticationViewModel.class);
 
-        authenticationViewModel.getUserMutableLiveData().observe(RegisterActivity.this, new Observer<FirebaseUser>() {
-            @Override
-            public void onChanged(FirebaseUser firebaseUser) {
-                if (firebaseUser != null) {
-                    Toast.makeText(RegisterActivity.this, "Mutable live data", Toast.LENGTH_LONG).show();
-                }
+        authenticationViewModel.getUserMutableLiveData().observe(RegisterActivity.this, firebaseUser -> {
+            if (firebaseUser != null) {
+                Toast.makeText(RegisterActivity.this, "Mutable live data", Toast.LENGTH_LONG).show();
             }
         });
     }

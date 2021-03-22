@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -55,7 +56,7 @@ public class AuthenticationRepository {
                 });
     }
 
-    public MutableLiveData<FirebaseUser> getUserMutableLiveData() {
+    public LiveData<FirebaseUser> getUserMutableLiveData() {
         return userMutableLiveData;
     }
 }

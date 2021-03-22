@@ -30,10 +30,8 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void initViewModel() {
-        // TODO: init view model
         authenticationViewModel = new ViewModelProvider(this).get(AuthenticationViewModel.class);
 
-        // TODO: add observe behavior for the Mutable Live Data
         authenticationViewModel.getUserMutableLiveData().observe(RegisterActivity.this, new Observer<FirebaseUser>() {
             @Override
             public void onChanged(FirebaseUser firebaseUser) {
@@ -51,7 +49,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.P)
     public void registerButtonClick(View view) {
-        // TODO: Get the email and password, call the appropriate register function
         String email = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
 

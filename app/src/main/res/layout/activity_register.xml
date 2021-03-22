@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- TODO: Implement this layout -->
-<!-- Main components: 2 edit texts, one register button -->
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -13,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/register_activity"
-        android:textSize="40dp"
+        android:textSize="40sp"
         android:layout_centerHorizontal="true"/>
 
     <com.google.android.material.textfield.TextInputLayout

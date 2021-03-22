@@ -1,11 +1,14 @@
 package com.hcmus.android.weshare.repository;
 
 import android.app.Application;
+import android.content.Context;
 import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,7 +34,7 @@ public class AuthenticationRepository {
     @RequiresApi(api = Build.VERSION_CODES.P)
     public void register(String email, String password) {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(application.getMainExecutor(), task -> {
+                .addOnCompleteListener(ContextCompat.getMainExecutor(application), task -> {
                     if (task.isSuccessful()) {
                         userMutableLiveData.postValue(firebaseAuth.getCurrentUser());
                     } else {
@@ -43,7 +46,7 @@ public class AuthenticationRepository {
     @RequiresApi(api = Build.VERSION_CODES.P)
     public void login(String email, String password) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(application.getMainExecutor(), task -> {
+                .addOnCompleteListener(ContextCompat.getMainExecutor(application), task -> {
                     if (task.isSuccessful()) {
                         userMutableLiveData.postValue(firebaseAuth.getCurrentUser());
                     } else {

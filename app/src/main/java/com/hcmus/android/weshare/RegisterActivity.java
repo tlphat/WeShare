@@ -44,7 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void initComponents() {
         emailEditText = findViewById(R.id.register_email_edit_text);
-        passwordEditText = findViewById(R.id.register_email_edit_text);
+        passwordEditText = findViewById(R.id.register_password_edit_text);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.P)

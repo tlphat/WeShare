@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initComponents();
         initViewModel();
-        navigateToRegister(); // For testing the register function
     }
 
     private void initViewModel() {
@@ -51,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.P)
     public void loginButtonClick(View view) {
         String email = emailEditText.getText().toString();
-        String password = emailEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
 
         if (email.length() > 0 && password.length() > 0) {
             authenticationViewModel.login(email, password);

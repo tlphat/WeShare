@@ -9,25 +9,58 @@
     android:layout_height="match_parent"
     android:layout_margin="50dp"
     tools:context=".MainActivity">
-
-    <Button
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="loginButtonClick"
-        android:text="Login"
+        android:text="@string/app_name"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="200dp"/>
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height= "wrap_content"
-        android:id="@+id/login_email_edit_text"
-        android:text="Email"
-        android:layout_marginTop="100dp"/>
-    <EditText
+        android:layout_marginTop="30dp"
+        android:textSize="50dp"/>
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:onClick="loginButtonClick"
+        android:text="@string/login_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="220dp"/>
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:onClick="signUpButtonClick"
+        android:text="@string/register_button"
+        android:layout_marginTop="260dp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/register_email_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/login_password_edit_text"
-        android:text="Password"
-        android:layout_marginTop="150dp"/>
+        android:layout_marginTop="100dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/register_email_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/email_hint"
+            android:inputType="textEmailAddress"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/etPasswordLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:passwordToggleEnabled="true"
+        android:layout_marginTop="150dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/register_password_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password_hint"
+            android:inputType="textPassword"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
 </RelativeLayout>

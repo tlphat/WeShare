@@ -54,8 +54,12 @@ public class MainActivity extends AppCompatActivity {
         String password = emailEditText.getText().toString();
 
         if (email.length() > 0 && password.length() > 0) {
-            authenticationViewModel.register(email, password);
+            authenticationViewModel.login(email, password);
         }
+    }
+
+    public void signUpButtonClick(View view) {
+        navigateToRegister();
     }
 
     public void navigateToRegister() {

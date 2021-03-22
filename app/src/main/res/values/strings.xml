@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">WeShare</string>
+    <string name="register_activity">REGISTER</string>
+    <string name="login_activity">LOGIN</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="login_button">Login</string>
+    <string name="register_button">Sign up</string>
 </resources>

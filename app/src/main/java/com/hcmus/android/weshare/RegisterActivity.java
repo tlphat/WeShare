@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +19,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     private EditText emailEditText;
     private EditText passwordEditText;
+    private String email;
+    private String password;
 
     private AuthenticationViewModel authenticationViewModel;
 
@@ -34,9 +37,18 @@ public class RegisterActivity extends AppCompatActivity {
 
         authenticationViewModel.getUserMutableLiveData().observe(RegisterActivity.this, firebaseUser -> {
             if (firebaseUser != null) {
-                Toast.makeText(RegisterActivity.this, "Mutable live data", Toast.LENGTH_LONG).show();
+                Toast.makeText(RegisterActivity.this, R.string.register_success_message, Toast.LENGTH_LONG).show();
+                navigateBackToLoginActivity();
             }
         });
+    }
+
+    private void navigateBackToLoginActivity() {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("email", email);
+        returnIntent.putExtra("password", password);
+        setResult(MainActivity.RESULT_OK, returnIntent);
+        finish();
     }
 
     private void initComponents() {
@@ -46,8 +58,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.P)
     public void registerButtonClick(View view) {
-        String email = emailEditText.getText().toString();
-        String password = passwordEditText.getText().toString();
+        email = emailEditText.getText().toString();
+        password = passwordEditText.getText().toString();
 
         if (email.length() > 0 && password.length() > 0) {
             authenticationViewModel.register(email, password);

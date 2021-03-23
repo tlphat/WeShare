@@ -1,5 +1,6 @@
 package com.hcmus.android.weshare;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -19,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText emailEditText;
     private EditText passwordEditText;
+    private String email;
+    private String password;
 
     private AuthenticationViewModel authenticationViewModel;
 
@@ -34,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         authenticationViewModel = new ViewModelProvider(this).get(AuthenticationViewModel.class);
         authenticationViewModel.getUserMutableLiveData().observe(this, firebaseUser -> {
             if (firebaseUser != null) {
-                Toast.makeText(MainActivity.this, "Mutable live data", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, R.string.login_success_message, Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -46,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.P)
     public void loginButtonClick(View view) {
-        String email = emailEditText.getText().toString();
-        String password = passwordEditText.getText().toString();
+        email = emailEditText.getText().toString();
+        password = passwordEditText.getText().toString();
 
         if (email.length() > 0 && password.length() > 0) {
             authenticationViewModel.login(email, password);
@@ -58,8 +61,31 @@ public class MainActivity extends AppCompatActivity {
         navigateToRegisterActivity();
     }
 
+    int REGISTER_CODE = 240;
+
     public void navigateToRegisterActivity() {
         Intent intent = new Intent(this, RegisterActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, REGISTER_CODE);
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.P)
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REGISTER_CODE) {
+            if (resultCode == MainActivity.RESULT_OK) {
+                email = data.getStringExtra("email");
+                password = data.getStringExtra("password");
+                emailEditText.setText(email);
+                passwordEditText.setText(password);
+                authenticationViewModel.login(email, password);
+            }
+            else if (resultCode == MainActivity.RESULT_CANCELED) {
+
+            }
+        }
+
+    }
+
 }

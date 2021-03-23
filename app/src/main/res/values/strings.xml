@@ -6,4 +6,6 @@
     <string name="password_hint">Password</string>
     <string name="login_button">Login</string>
     <string name="register_button">Sign up</string>
+    <string name="register_success_message">Register successfully!</string>
+    <string name="login_success_message">Let\'s Share!</string>
 </resources>

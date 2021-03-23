@@ -27,12 +27,16 @@ public class AuthenticationViewModel extends AndroidViewModel {
 
     @RequiresApi(api = Build.VERSION_CODES.P)
     public void register(String email, String password) {
-        authenticationRepository.register(email, password);
+        if (email.length() > 0 && password.length() > 0) {
+            authenticationRepository.register(email, password);
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.P)
     public void login(String email, String password) {
-        authenticationRepository.login(email, password);
+        if (email.length() > 0 && password.length() > 0) {
+            authenticationRepository.login(email, password);
+        }
     }
 
     public LiveData<FirebaseUser> getUserMutableLiveData() {

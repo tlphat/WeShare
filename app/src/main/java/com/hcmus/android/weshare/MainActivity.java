@@ -18,10 +18,10 @@ import com.hcmus.android.weshare.viewmodel.AuthenticationViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final int REGISTER_CODE = 240;
+
     private EditText emailEditText;
     private EditText passwordEditText;
-    private String email;
-    private String password;
 
     private AuthenticationViewModel authenticationViewModel;
 
@@ -49,19 +49,14 @@ public class MainActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.P)
     public void loginButtonClick(View view) {
-        email = emailEditText.getText().toString();
-        password = passwordEditText.getText().toString();
-
-        if (email.length() > 0 && password.length() > 0) {
-            authenticationViewModel.login(email, password);
-        }
+        String email = emailEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
+        authenticationViewModel.login(email, password);
     }
 
     public void signUpButtonClick(View view) {
         navigateToRegisterActivity();
     }
-
-    int REGISTER_CODE = 240;
 
     public void navigateToRegisterActivity() {
         Intent intent = new Intent(this, RegisterActivity.class);
@@ -72,20 +67,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == REGISTER_CODE) {
-            if (resultCode == MainActivity.RESULT_OK) {
-                email = data.getStringExtra("email");
-                password = data.getStringExtra("password");
-                emailEditText.setText(email);
-                passwordEditText.setText(password);
-                authenticationViewModel.login(email, password);
-            }
-            else if (resultCode == MainActivity.RESULT_CANCELED) {
-
-            }
+        if (requestCode == REGISTER_CODE && resultCode == RESULT_OK) {
+            String email = data.getStringExtra("email");
+            String password = data.getStringExtra("password");
+            emailEditText.setText(email);
+            passwordEditText.setText(password);
+            authenticationViewModel.login(email, password);
         }
-
     }
-
 }

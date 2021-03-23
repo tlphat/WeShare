@@ -8,10 +8,13 @@
     tools:context=".RegisterActivity">
 
     <TextView
+        android:id="@+id/register_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/register_activity"
-        android:textSize="40sp"
+        android:textSize="50sp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
         android:layout_centerHorizontal="true"/>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -19,7 +22,8 @@
         android:id="@+id/register_email_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp">
+        android:layout_marginBottom="20dp"
+        android:layout_below="@id/register_title">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/register_email_edit_text"
@@ -31,11 +35,12 @@
     
     <com.google.android.material.textfield.TextInputLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/etPasswordLayout"
+        android:id="@+id/register_password_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:passwordToggleEnabled="true"
-        android:layout_marginTop="150dp">
+        android:layout_marginBottom="20dp"
+        android:layout_below="@id/register_email_layout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/register_password_edit_text"
@@ -50,7 +55,7 @@
         android:layout_height="wrap_content"
         android:onClick="registerButtonClick"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop = "250dp"
+        android:layout_below = "@id/register_password_layout"
         android:text="@string/register_button"/>
 
 </RelativeLayout>

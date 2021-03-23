@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -25,52 +26,35 @@ public class MainActivity extends AppCompatActivity {
 
     private AuthenticationViewModel authenticationViewModel;
 
-    /** The shared preferences are used to store latest login information */
-    private SharedPreferences latestLoginPreferences;
-    private SharedPreferences.Editor latestLoginEditor;
-
     @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initComponents();
-        loginWithLatestInfo();
-    }
-
-    private void initComponents() {
-        initSharePreferences();
         initEditTexts();
         initViewModel();
+        loginWithLatestInfo();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.P)
     private void loginWithLatestInfo() {
-        String latestEmail = latestLoginPreferences.getString("email", "");
-        String latestPassword = latestLoginPreferences.getString("password", "");
-        loginWithGivenEmailAndPassword(latestEmail, latestPassword);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.P)
-    private void loginWithGivenEmailAndPassword(String email, String password) {
-        emailEditText.setText(email);
-        passwordEditText.setText(password);
-        loginWithEmailAndPassword(email, password);
-    }
-
-    @SuppressLint("CommitPrefEdits")
-    private void initSharePreferences() {
-        latestLoginPreferences = getSharedPreferences("login_preferences", MODE_PRIVATE);
-        latestLoginEditor = latestLoginPreferences.edit();
+        authenticationViewModel.loginWithLatestInfo();
     }
 
     private void initViewModel() {
         authenticationViewModel = new ViewModelProvider(this).get(AuthenticationViewModel.class);
         authenticationViewModel.getUserMutableLiveData().observe(this, firebaseUser -> {
             if (firebaseUser != null) {
+                storeLoginInfo();
                 Toast.makeText(MainActivity.this, R.string.login_success_message, Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void storeLoginInfo() {
+        String email = authenticationViewModel.getUserEmail().getValue();
+        String password = authenticationViewModel.getUserPassword().getValue();
+        authenticationViewModel.storeLoginInfo(email, password);
     }
 
     private void initEditTexts() {
@@ -82,19 +66,7 @@ public class MainActivity extends AppCompatActivity {
     public void loginButtonClick(View view) {
         String email = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
-        loginWithEmailAndPassword(email, password);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.P)
-    private void loginWithEmailAndPassword(String email, String password) {
-        storeLoginInfo(email, password);
         authenticationViewModel.login(email, password);
-    }
-
-    private void storeLoginInfo(String email, String password) {
-        latestLoginEditor.putString("email", email);
-        latestLoginEditor.putString("password", password);
-        latestLoginEditor.commit();
     }
 
     public void signUpButtonClick(View view) {
@@ -109,7 +81,9 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == REGISTER_CODE && resultCode == RESULT_OK) {
             String email = data.getStringExtra("email");
             String password = data.getStringExtra("password");
-            loginWithGivenEmailAndPassword(email, password);
+            emailEditText.setText(email);
+            passwordEditText.setText(password);
+            authenticationViewModel.login(email, password);
         }
     }
 }

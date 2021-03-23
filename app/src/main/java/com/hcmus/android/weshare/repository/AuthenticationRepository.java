@@ -2,6 +2,7 @@ package com.hcmus.android.weshare.repository;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.Log;
 
@@ -23,13 +24,14 @@ public class AuthenticationRepository {
     private final String TAG = "AppRepository";
 
     private final Application application;
-    private final FirebaseAuth firebaseAuth;
-    private final MutableLiveData<FirebaseUser> userMutableLiveData;
+    private final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+
+    private final MutableLiveData<FirebaseUser> userMutableLiveData = new MutableLiveData<>();
+    private final MutableLiveData<String> userEmail = new MutableLiveData<>();
+    private final MutableLiveData<String> userPassword = new MutableLiveData<>();
 
     public AuthenticationRepository(Application application) {
         this.application = application;
-        firebaseAuth = FirebaseAuth.getInstance();
-        userMutableLiveData = new MutableLiveData<>();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.P)
@@ -37,6 +39,8 @@ public class AuthenticationRepository {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(ContextCompat.getMainExecutor(application), task -> {
                     if (task.isSuccessful()) {
+                        userEmail.postValue(email);
+                        userPassword.postValue(password);
                         userMutableLiveData.postValue(firebaseAuth.getCurrentUser());
                     } else {
                         Log.e(TAG, "Error creating user!");
@@ -49,6 +53,8 @@ public class AuthenticationRepository {
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(ContextCompat.getMainExecutor(application), task -> {
                     if (task.isSuccessful()) {
+                        userEmail.postValue(email);
+                        userPassword.postValue(password);
                         userMutableLiveData.postValue(firebaseAuth.getCurrentUser());
                     } else {
                         Log.e(TAG, "Error sign in!");
@@ -58,5 +64,13 @@ public class AuthenticationRepository {
 
     public LiveData<FirebaseUser> getUserMutableLiveData() {
         return userMutableLiveData;
+    }
+
+    public LiveData<String> getUserEmail() {
+        return userEmail;
+    }
+
+    public LiveData<String> getUserPassword() {
+        return userPassword;
     }
 }

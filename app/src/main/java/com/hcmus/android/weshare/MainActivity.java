@@ -5,12 +5,9 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -38,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void navigateToChatBox() {
-        Intent intent = new Intent(this, ChatboxActivity.class);
+        Intent intent = new Intent(this, ChatBoxActivity.class);
         startActivity(intent);
     }
 

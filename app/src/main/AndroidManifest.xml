@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WeShare">
         <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".ChatBoxActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

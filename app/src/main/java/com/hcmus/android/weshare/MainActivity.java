@@ -31,9 +31,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        navigateToChatBox();
         initEditTexts();
         initViewModel();
         loginWithLatestInfo();
+    }
+
+    private void navigateToChatBox() {
+        Intent intent = new Intent(this, ChatboxActivity.class);
+        startActivity(intent);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.P)

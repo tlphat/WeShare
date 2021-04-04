@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data class = "ChatUserBinding">
+        <variable
+            name="viewModel"
+            type="com.hcmus.android.weshare.ChatUserViewModel" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/emailTxt"
+            android:text="@{viewModel.email}"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/messageTxt"
+            android:text="@{viewModel.message}"/>
+
+    </LinearLayout>
+</layout>

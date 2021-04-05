@@ -25,6 +25,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:id="@+id/send_button"
+        android:onClick="sendMessageButtonClick"
         android:text="Send" />
 
 </RelativeLayout>

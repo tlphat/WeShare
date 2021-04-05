@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -28,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        navigateToChatBox();
         initEditTexts();
         initViewModel();
         loginWithLatestInfo();
@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void navigateToChatBox() {
         Intent intent = new Intent(this, ChatBoxActivity.class);
+        intent.putExtra("user", authenticationViewModel.getUserMutableLiveData().getValue());
         startActivity(intent);
     }
 
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         authenticationViewModel.getUserMutableLiveData().observe(this, firebaseUser -> {
             if (firebaseUser != null) {
                 storeLoginInfo();
-                Toast.makeText(MainActivity.this, R.string.login_success_message, Toast.LENGTH_LONG).show();
+                navigateToChatBox();
             }
         });
     }

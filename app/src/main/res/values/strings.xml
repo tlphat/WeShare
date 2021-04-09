@@ -10,4 +10,5 @@
     <string name="login_success_message">Let\'s Share!</string>
     <string name="pubnub_subscribe_key">sub-c-3a110a32-9483-11eb-8d7b-b642bba3de20</string>
     <string name="pubnub_publish_key">pub-c-6b9279dd-74e6-477c-89b6-114afbd0a266</string>
+    <string name ="type_message_hint">Type your message here...</string>
 </resources>

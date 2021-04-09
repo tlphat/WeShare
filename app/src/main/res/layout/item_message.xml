@@ -6,25 +6,29 @@
             name="viewModel"
             type="com.hcmus.android.weshare.viewmodel.MessageViewModel" />
     </data>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center">
-
-        <TextView
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/emailTxt"
-            android:textSize="20sp"
-            android:text="@{viewModel.email}"/>
+            android:orientation="vertical"
+            android:gravity="left"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/messageTxt"
-            android:textSize="20sp"
-            android:text="@{viewModel.content}"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/emailTxt"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:text="@{viewModel.email}"/>
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/messageTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.content}"
+                android:textSize="20sp"
+                android:background="@drawable/message_background"/>
+
+        </LinearLayout>
 </layout>

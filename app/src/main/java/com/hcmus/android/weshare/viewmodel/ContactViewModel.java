@@ -1,20 +1,13 @@
 package com.hcmus.android.weshare.viewmodel;
 
 import com.google.gson.JsonObject;
+import com.hcmus.android.weshare.model.User;
 
+import lombok.Getter;
+
+@Getter
 public class ContactViewModel {
 
-    private String email;
-
-    public ContactViewModel (String email) {
-        this.email = email;
-    }
-
-    public ContactViewModel (JsonObject contactPackage) {
-        this.email = contactPackage.get("email").getAsString();
-    }
-
-    public String getEmail() {
-        return email;
-    }
+    private final String connectionID = "dummy";
+    private User user;
 }

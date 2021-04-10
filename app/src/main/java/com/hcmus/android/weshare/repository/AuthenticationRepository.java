@@ -1,23 +1,19 @@
 package com.hcmus.android.weshare.repository;
 
 import android.app.Application;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.hcmus.android.weshare.model.User;
+
+import lombok.Getter;
 
 public class AuthenticationRepository {
 
@@ -30,6 +26,8 @@ public class AuthenticationRepository {
     private final MutableLiveData<String> userEmail = new MutableLiveData<>();
     private final MutableLiveData<String> userPassword = new MutableLiveData<>();
 
+    @Getter private User user;
+
     public AuthenticationRepository(Application application) {
         this.application = application;
     }
@@ -39,6 +37,7 @@ public class AuthenticationRepository {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(ContextCompat.getMainExecutor(application), task -> {
                     if (task.isSuccessful()) {
+                        // TODO save user info to the database
                         userEmail.postValue(email);
                         userPassword.postValue(password);
                         userMutableLiveData.postValue(firebaseAuth.getCurrentUser());
@@ -53,6 +52,7 @@ public class AuthenticationRepository {
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(ContextCompat.getMainExecutor(application), task -> {
                     if (task.isSuccessful()) {
+                        // TODO load user info from the database
                         userEmail.postValue(email);
                         userPassword.postValue(password);
                         userMutableLiveData.postValue(firebaseAuth.getCurrentUser());

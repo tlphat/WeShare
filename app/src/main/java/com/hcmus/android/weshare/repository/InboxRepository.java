@@ -38,7 +38,6 @@ public class InboxRepository {
         this.uuid = uuid;
         PNConfiguration config = initPubNubConfig();
         initPubNub(config);
-
         messageViewModels.setValue(new ArrayList<>());
     }
 

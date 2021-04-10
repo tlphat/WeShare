@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WeShare">
-        <activity android:name=".ContactActivity"></activity>
+        <activity android:name=".ContactActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".ChatBoxActivity" />
         <activity android:name=".MainActivity">

@@ -13,6 +13,7 @@ import com.hcmus.android.weshare.viewmodel.ContactViewModel;
 import java.util.List;
 
 public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.MyAdapter> {
+
     private final Context context;
     private final List<ContactViewModel> data;
     private LayoutInflater inflater;
@@ -25,12 +26,11 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     @NonNull
     @Override
     public MyAdapter onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         if (inflater == null) {
             inflater = LayoutInflater.from(parent.getContext());
         }
         ContactBinding contactBinding = ContactBinding.inflate(inflater, parent, false);
-        return new ContactListAdapter.MyAdapter(contactBinding);
+        return new MyAdapter(contactBinding);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 
     @Override
     public int getItemCount() {
-        return 0;
+        return data.size();
     }
 
     public class MyAdapter extends RecyclerView.ViewHolder {

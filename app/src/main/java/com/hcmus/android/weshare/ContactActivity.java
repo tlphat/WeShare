@@ -41,6 +41,7 @@ public class ContactActivity extends AppCompatActivity {
 
     private void initComponents() {
         contactList = findViewById(R.id.contact_list_layout);
+        contactList.setLayoutManager(new LinearLayoutManager(this));
         contactListAdapter = new ContactListAdapter(friendList, this);
         contactList.setAdapter(contactListAdapter);
     }

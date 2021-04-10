@@ -50,9 +50,14 @@ public class MainActivity extends AppCompatActivity {
         authenticationViewModel.getUserMutableLiveData().observe(this, firebaseUser -> {
             if (firebaseUser != null) {
                 storeLoginInfo();
-                navigateToChatBox();
+                navigateToContactList();
             }
         });
+    }
+
+    private void navigateToContactList() {
+        Intent intent = new Intent(this, ContactActivity.class);
+        startActivity(intent);
     }
 
     private void storeLoginInfo() {

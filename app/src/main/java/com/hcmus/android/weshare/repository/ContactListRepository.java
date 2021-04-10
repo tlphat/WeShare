@@ -14,7 +14,6 @@ public class ContactListRepository {
 
     private final Application application;
     private final MutableLiveData<List<ContactViewModel>> contactViewModels = new MutableLiveData<>();
-    private User user;
 
     public ContactListRepository(Application application) {
         this.application = application;
@@ -24,11 +23,7 @@ public class ContactListRepository {
         return contactViewModels;
     }
 
-    public void initUser(User user) {
-        this.user = user;
-    }
-
-    public void retrieveFriends() {
+    public void retrieveFriends(String userID) {
         // TODO get friends of current user from the database
     }
 }

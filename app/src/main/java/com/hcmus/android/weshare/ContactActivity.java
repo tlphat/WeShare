@@ -28,15 +28,7 @@ public class ContactActivity extends AppCompatActivity {
     }
 
     private void initFriendList() {
-//        friendList.add(new ContactViewModel("tlphat18@apcs.vn"));
-//        friendList.add(new ContactViewModel("12345678910@apcs.vn"));
-//        friendList.add(new ContactViewModel("hmmmmmm@apcs.vn"));
-//        friendList.add(new ContactViewModel("lalala123@apcs.vn"));
-//        friendList.add(new ContactViewModel("dungplt242@apcs.vn"));
-//        friendList.add(new ContactViewModel("test@apcs.vn"));
-//        friendList.add(new ContactViewModel("mytest@apcs.vn"));
-//        friendList.add(new ContactViewModel("abcxyz@apcs.vn"));
-//        friendList.add(new ContactViewModel("abcxyz@apcs.vn"));
+
     }
 
     private void initComponents() {

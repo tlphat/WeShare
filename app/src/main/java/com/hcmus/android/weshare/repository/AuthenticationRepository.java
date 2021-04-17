@@ -12,8 +12,13 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.hcmus.android.weshare.model.User;
+import com.hcmus.android.weshare.retrofit.ApiInterface;
+import com.hcmus.android.weshare.retrofit.RetrofitUtility;
 
 import lombok.Getter;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AuthenticationRepository {
 
@@ -26,7 +31,7 @@ public class AuthenticationRepository {
     private final MutableLiveData<String> userEmail = new MutableLiveData<>();
     private final MutableLiveData<String> userPassword = new MutableLiveData<>();
 
-    @Getter private User user;
+    @Getter private MutableLiveData<User> user;
 
     public AuthenticationRepository(Application application) {
         this.application = application;
@@ -41,10 +46,17 @@ public class AuthenticationRepository {
                         userEmail.postValue(email);
                         userPassword.postValue(password);
                         userMutableLiveData.postValue(firebaseAuth.getCurrentUser());
+                        saveUserInfoToDB();
                     } else {
                         Log.e(TAG, "Error creating user!");
                     }
                 });
+    }
+
+    private void saveUserInfoToDB() {
+        ApiInterface apiService = RetrofitUtility.getRetrofitClient().create(ApiInterface.class);
+
+        apiService.saveUser(userMutableLiveData.getValue().getUid(), userMutableLiveData.getValue().getEmail());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.P)
@@ -72,5 +84,24 @@ public class AuthenticationRepository {
 
     public LiveData<String> getUserPassword() {
         return userPassword;
+    }
+
+    public void loadUserInfoFromDB() {
+        ApiInterface apiService = RetrofitUtility.getRetrofitClient().create(ApiInterface.class);
+
+        apiService.getUser(userMutableLiveData.getValue().getUid()).enqueue(new Callback<User>() {
+
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    user.postValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+
+            }
+        });
     }
 }

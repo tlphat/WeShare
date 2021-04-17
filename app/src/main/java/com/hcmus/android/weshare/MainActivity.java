@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -50,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
         authenticationViewModel.getUserMutableLiveData().observe(this, firebaseUser -> {
             if (firebaseUser != null) {
                 storeLoginInfo();
+                authenticationViewModel.loadUserInfoFromDB();
+                Log.d("LoadUserInfo: ", "done");
                 navigateToContactList();
             }
         });
@@ -57,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void navigateToContactList() {
         Intent intent = new Intent(this, ContactActivity.class);
+        intent.putExtra("user", authenticationViewModel.getUserMutableLiveData().getValue());
         startActivity(intent);
     }
 

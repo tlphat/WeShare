@@ -77,4 +77,8 @@ public class AuthenticationViewModel extends AndroidViewModel {
     public LiveData<String> getUserPassword() {
         return authenticationRepository.getUserPassword();
     }
+
+    public void loadUserInfoFromDB() {
+        authenticationRepository.loadUserInfoFromDB();
+    }
 }

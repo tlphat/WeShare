@@ -9,4 +9,8 @@ public class User {
     private String displayName;
     private String dob;
     private String gender;
+
+    public User(String uid) {
+        this.uid = uid;
+    }
 }

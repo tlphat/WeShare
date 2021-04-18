@@ -16,7 +16,7 @@ import com.hcmus.android.weshare.viewmodel.ContactViewModel;
 
 import java.util.List;
 
-public class ContactActivity extends AppCompatActivity {
+public class ContactActivity extends AppCompatActivity implements ContactListAdapter.OnItemClick {
 
     private final String TAG = getClass().getSimpleName();
 
@@ -63,5 +63,15 @@ public class ContactActivity extends AppCompatActivity {
         contactList.setLayoutManager(new LinearLayoutManager(this));
         contactListAdapter = new ContactListAdapter(friendList.getValue(), this);
         contactList.setAdapter(contactListAdapter);
+    }
+
+    @Override
+    public void onContactItemClick(int position) {
+        Intent intent = new Intent(this, ChatBoxActivity.class);
+        intent.putExtra("from_user", user);
+        intent.putExtra("to_user", friendList.getValue().get(position).getUser());
+        intent.putExtra("channel_id", "private_"
+                + friendList.getValue().get(position).getConnectionID());
+        startActivity(intent);
     }
 }

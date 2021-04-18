@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,8 +15,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.auth.FirebaseUser;
 import com.hcmus.android.weshare.adapter.MessageListAdapter;
+import com.hcmus.android.weshare.model.User;
 import com.hcmus.android.weshare.viewmodel.InboxViewModel;
 import com.hcmus.android.weshare.viewmodel.MessageViewModel;
 
@@ -23,33 +24,41 @@ import java.util.List;
 
 public class ChatBoxActivity extends AppCompatActivity {
 
-    private RecyclerView chatBox;
     private InboxViewModel inboxViewModel;
     private EditText messageEditText;
 
     private MessageListAdapter messageListAdapter;
-    private FirebaseUser user;
+    private User fromUser;
+    private User toUser;
+    private String channelName;
     private LiveData<List<MessageViewModel>> messages;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatbox);
-        initUserIDInfo();
+        initChannelInfo();
         initViewModel();
         handleMessageListFromViewModel();
         initComponents();
+        fetchMessages();
+    }
+
+    private void fetchMessages() {
+        inboxViewModel.fetchMessages(channelName);
     }
 
     private void initViewModel() {
         inboxViewModel = new ViewModelProvider(this).get(InboxViewModel.class);
-        inboxViewModel.initRepository(user.getUid());
-        inboxViewModel.registerChannel("test_channel");
+        inboxViewModel.initRepository(fromUser.getId());
+        inboxViewModel.registerChannel(channelName);
     }
 
-    private void initUserIDInfo() {
+    private void initChannelInfo() {
         Intent intent = getIntent();
-        user = intent.getParcelableExtra("user");
+        fromUser = intent.getParcelableExtra("from_user");
+        toUser = intent.getParcelableExtra("to_user");
+        channelName = intent.getStringExtra("channel_id");
     }
 
     private void handleMessageListFromViewModel() {
@@ -60,14 +69,30 @@ public class ChatBoxActivity extends AppCompatActivity {
 
     private void initComponents() {
         messageEditText = findViewById(R.id.input_text);
-        chatBox = findViewById(R.id.chatbox_layout);
+        RecyclerView chatBox = findViewById(R.id.chatbox_layout);
         chatBox.setLayoutManager(new LinearLayoutManager(this));
         messageListAdapter = new MessageListAdapter(messages.getValue(), this);
         chatBox.setAdapter(messageListAdapter);
+        setReceiverTextName();
+    }
+
+    private void setReceiverTextName() {
+        TextView receiverName = findViewById(R.id.chatbox_name);
+        if (toUser.getDisplayName() != null) {
+            receiverName.setText(toUser.getDisplayName());
+        } else {
+            receiverName.setText(toUser.getEmail());
+        }
     }
 
     public void sendMessageButtonClick(View view) {
-        inboxViewModel.sendMessage(user.getEmail(), messageEditText.getText().toString());
+        if (fromUser.getDisplayName() != null) {
+            inboxViewModel.sendMessage(fromUser.getDisplayName(),
+                    messageEditText.getText().toString(), channelName);
+        } else {
+            inboxViewModel.sendMessage(fromUser.getEmail(),
+                    messageEditText.getText().toString(), channelName);
+        }
         disableEditTextFocus();
     }
 

@@ -7,11 +7,16 @@ import lombok.Getter;
 @Getter
 public class MessageViewModel {
 
-    private String content;
-    private String email;
+    private final String content;
+    private final String identity;
 
     public MessageViewModel(JsonObject messagePackage) {
         this.content = messagePackage.get("content").getAsString();
-        this.email = messagePackage.get("email").getAsString();
+        this.identity = messagePackage.get("identity").getAsString();
+    }
+
+    public static boolean isMessage(JsonObject messagePackage) {
+        return messagePackage.has("content")
+                && messagePackage.has("identity");
     }
 }

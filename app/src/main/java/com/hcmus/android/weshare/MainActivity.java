@@ -32,12 +32,6 @@ public class MainActivity extends AppCompatActivity {
         loginWithLatestInfo();
     }
 
-    private void navigateToChatBox() {
-        Intent intent = new Intent(this, ChatBoxActivity.class);
-        intent.putExtra("user", authenticationViewModel.getUserMutableLiveData().getValue());
-        startActivity(intent);
-    }
-
     @RequiresApi(api = Build.VERSION_CODES.P)
     private void loginWithLatestInfo() {
         authenticationViewModel.loginWithLatestInfo();

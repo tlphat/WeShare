@@ -29,14 +29,18 @@ public class InboxViewModel extends AndroidViewModel {
         inboxRepository.registerChannel(channelName);
     }
 
-    public void sendMessage(String email, String message) {
+    public void sendMessage(String identity, String message, String channelName) {
         JsonObject messageJsonObject = new JsonObject();
-        messageJsonObject.addProperty("email", email);
+        messageJsonObject.addProperty("identity", identity);
         messageJsonObject.addProperty("content", message);
-        inboxRepository.sendMessage(messageJsonObject);
+        inboxRepository.sendMessage(messageJsonObject, channelName);
     }
 
     public LiveData<List<MessageViewModel>> getMessageViewModels() {
         return messageViewModels;
+    }
+
+    public void fetchMessages(String channelName) {
+        inboxRepository.fetchMessage(channelName);
     }
 }

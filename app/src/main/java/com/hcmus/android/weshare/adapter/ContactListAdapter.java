@@ -1,7 +1,7 @@
 package com.hcmus.android.weshare.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -14,13 +14,13 @@ import java.util.List;
 
 public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.MyAdapter> {
 
-    private final Context context;
     private List<ContactViewModel> data;
     private LayoutInflater inflater;
+    private final OnItemClick itemClick;
 
-    public ContactListAdapter(List<ContactViewModel> data, Context context) {
+    public ContactListAdapter(List<ContactViewModel> data, OnItemClick itemClick) {
         this.data = data;
-        this.context = context;
+        this.itemClick = itemClick;
     }
 
     @NonNull
@@ -30,7 +30,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             inflater = LayoutInflater.from(parent.getContext());
         }
         ContactBinding contactBinding = ContactBinding.inflate(inflater, parent, false);
-        return new MyAdapter(contactBinding);
+        return new MyAdapter(contactBinding, itemClick);
     }
 
     @Override
@@ -47,14 +47,20 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         this.data = data;
     }
 
-    public class MyAdapter extends RecyclerView.ViewHolder {
+    public interface OnItemClick {
+        void onContactItemClick(int position);
+    }
+
+    public class MyAdapter extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final ContactBinding contactBinding;
+        private final OnItemClick itemClick;
 
-
-        public MyAdapter(ContactBinding contactBinding) {
+        public MyAdapter(ContactBinding contactBinding, OnItemClick itemClick) {
             super(contactBinding.getRoot());
             this.contactBinding = contactBinding;
+            this.itemClick = itemClick;
+            contactBinding.contactRow.setOnClickListener(this);
         }
 
         public void bind(ContactViewModel contactViewModel) {
@@ -63,6 +69,11 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 
         public ContactBinding getContactBinding() {
             return contactBinding;
+        }
+
+        @Override
+        public void onClick(View view) {
+            itemClick.onContactItemClick(getAdapterPosition());
         }
     }
 }

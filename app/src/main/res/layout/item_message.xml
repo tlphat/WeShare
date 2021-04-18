@@ -20,7 +20,7 @@
                 android:id="@+id/emailTxt"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:text="@{viewModel.email}"/>
+                android:text="@{viewModel.identity}" />
 
             <TextView
                 android:id="@+id/messageTxt"

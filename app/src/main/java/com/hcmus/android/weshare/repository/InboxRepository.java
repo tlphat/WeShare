@@ -12,6 +12,7 @@ import com.pubnub.api.PNConfiguration;
 import com.pubnub.api.PubNub;
 import com.pubnub.api.callbacks.SubscribeCallback;
 import com.pubnub.api.models.consumer.PNStatus;
+import com.pubnub.api.models.consumer.history.PNHistoryItemResult;
 import com.pubnub.api.models.consumer.objects_api.channel.PNChannelMetadataResult;
 import com.pubnub.api.models.consumer.objects_api.membership.PNMembershipResult;
 import com.pubnub.api.models.consumer.objects_api.uuid.PNUUIDMetadataResult;
@@ -78,11 +79,27 @@ public class InboxRepository {
         return pnConfiguration;
     }
 
-    public void sendMessage(JsonObject msg) {
+    public void sendMessage(JsonObject msg, String channelName) {
         pubnub.publish()
                 .message(msg)
-                .channel("test_channel")
-                .async((result, status) -> {});
+                .channel(channelName)
+                .async((result, status) -> {
+                });
+    }
+
+    public void fetchMessage(String channelName) {
+        pubnub.history()
+                .channel(channelName)
+                .count(10)
+                .async((result, status) -> {
+                    List<MessageViewModel> messageViewModels = InboxRepository.this.messageViewModels.getValue();
+                    for (PNHistoryItemResult messageItem : result.getMessages()) {
+                        if (MessageViewModel.isMessage(messageItem.getEntry().getAsJsonObject())) {
+                            messageViewModels.add(new MessageViewModel(messageItem.getEntry().getAsJsonObject()));
+                        }
+                    }
+                    InboxRepository.this.messageViewModels.postValue(messageViewModels);
+                });
     }
 
     public void registerChannel(String channelName) {

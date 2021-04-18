@@ -39,5 +39,4 @@ public class InboxViewModel extends AndroidViewModel {
     public LiveData<List<MessageViewModel>> getMessageViewModels() {
         return messageViewModels;
     }
-
 }

@@ -1,18 +1,15 @@
 package com.hcmus.android.weshare;
 
+import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-
-import android.content.Intent;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Parcelable;
-import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import com.hcmus.android.weshare.viewmodel.AuthenticationViewModel;
 
@@ -52,7 +49,10 @@ public class MainActivity extends AppCompatActivity {
             if (firebaseUser != null) {
                 storeLoginInfo();
                 authenticationViewModel.loadUserInfoFromDB();
-                Log.d("LoadUserInfo: ", "done");
+            }
+        });
+        authenticationViewModel.getUser().observe(this, user -> {
+            if (user != null) {
                 navigateToContactList();
             }
         });
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void navigateToContactList() {
         Intent intent = new Intent(this, ContactActivity.class);
-        intent.putExtra("user", authenticationViewModel.getUserMutableLiveData().getValue());
+        intent.putExtra("user", authenticationViewModel.getUser().getValue());
         startActivity(intent);
     }
 

@@ -22,7 +22,7 @@ import retrofit2.Response;
 
 public class AuthenticationRepository {
 
-    private final String TAG = "AppRepository";
+    private final String TAG = getClass().getSimpleName();
 
     private final Application application;
     private final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -31,7 +31,8 @@ public class AuthenticationRepository {
     private final MutableLiveData<String> userEmail = new MutableLiveData<>();
     private final MutableLiveData<String> userPassword = new MutableLiveData<>();
 
-    @Getter private MutableLiveData<User> user;
+    @Getter
+    private final MutableLiveData<User> user = new MutableLiveData<>();
 
     public AuthenticationRepository(Application application) {
         this.application = application;
@@ -42,21 +43,36 @@ public class AuthenticationRepository {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(ContextCompat.getMainExecutor(application), task -> {
                     if (task.isSuccessful()) {
-                        // TODO save user info to the database
                         userEmail.postValue(email);
                         userPassword.postValue(password);
                         userMutableLiveData.postValue(firebaseAuth.getCurrentUser());
-                        saveUserInfoToDB();
                     } else {
                         Log.e(TAG, "Error creating user!");
                     }
                 });
     }
 
-    private void saveUserInfoToDB() {
-        ApiInterface apiService = RetrofitUtility.getRetrofitClient().create(ApiInterface.class);
+    public void saveUserInfoToDB() {
+        final FirebaseUser firebaseUser = userMutableLiveData.getValue();
+        RetrofitUtility.getInstance().getRetrofitClient().create(ApiInterface.class)
+                .saveUser(new User(firebaseUser.getUid(), firebaseUser.getEmail()))
+                .enqueue(new Callback<User>() {
+                    @Override
+                    public void onResponse(Call<User> call, Response<User> response) {
+                        if (response.isSuccessful() && response.body() != null
+                                && response.body().getId().equals(firebaseAuth.getUid())) {
+                            user.postValue(response.body());
+                            Log.e(TAG, "Write use to the database successfully");
+                        } else {
+                            Log.e(TAG, "Mismatch in writing user to the database");
+                        }
+                    }
 
-        apiService.saveUser(userMutableLiveData.getValue().getUid(), userMutableLiveData.getValue().getEmail());
+                    @Override
+                    public void onFailure(Call<User> call, Throwable t) {
+                        Log.e(TAG, "Failed to write user to the database");
+                    }
+                });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.P)
@@ -64,7 +80,6 @@ public class AuthenticationRepository {
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(ContextCompat.getMainExecutor(application), task -> {
                     if (task.isSuccessful()) {
-                        // TODO load user info from the database
                         userEmail.postValue(email);
                         userPassword.postValue(password);
                         userMutableLiveData.postValue(firebaseAuth.getCurrentUser());
@@ -87,20 +102,21 @@ public class AuthenticationRepository {
     }
 
     public void loadUserInfoFromDB() {
-        ApiInterface apiService = RetrofitUtility.getRetrofitClient().create(ApiInterface.class);
-
-        apiService.getUser(userMutableLiveData.getValue().getUid()).enqueue(new Callback<User>() {
-
+        RetrofitUtility.getInstance().getRetrofitClient().create(ApiInterface.class)
+                .getUser(userMutableLiveData.getValue().getUid()).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     user.postValue(response.body());
+                    Log.e(TAG, "Load user from the database successfully");
+                } else {
+                    Log.e(TAG, "Empty response when loading user from the database");
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-
+                Log.e(TAG, "Fail to load user from the database");
             }
         });
     }

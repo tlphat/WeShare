@@ -15,7 +15,7 @@ import java.util.List;
 public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.MyAdapter> {
 
     private final Context context;
-    private final List<ContactViewModel> data;
+    private List<ContactViewModel> data;
     private LayoutInflater inflater;
 
     public ContactListAdapter(List<ContactViewModel> data, Context context) {
@@ -41,6 +41,10 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     @Override
     public int getItemCount() {
         return data.size();
+    }
+
+    public void updateData(List<ContactViewModel> data) {
+        this.data = data;
     }
 
     public class MyAdapter extends RecyclerView.ViewHolder {

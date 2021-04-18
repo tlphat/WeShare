@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.google.gson.JsonObject;
+import com.hcmus.android.weshare.model.User;
 import com.hcmus.android.weshare.repository.InboxRepository;
 
 import java.util.List;
@@ -29,10 +30,11 @@ public class InboxViewModel extends AndroidViewModel {
         inboxRepository.registerChannel(channelName);
     }
 
-    public void sendMessage(String identity, String message, String channelName) {
+    public void sendMessage(User sender, String message, String channelName) {
         JsonObject messageJsonObject = new JsonObject();
-        messageJsonObject.addProperty("identity", identity);
+        messageJsonObject.addProperty("identity", sender.getDisplayName());
         messageJsonObject.addProperty("content", message);
+        messageJsonObject.addProperty("sender_id", sender.getId());
         inboxRepository.sendMessage(messageJsonObject, channelName);
     }
 

@@ -48,9 +48,11 @@ public class InboxRepository {
             @Override
             public void message(PubNub pubnub, PNMessageResult message) {
                 JsonObject messagePackage = message.getMessage().getAsJsonObject();
-                List<MessageViewModel> messageViewModels = InboxRepository.this.messageViewModels.getValue();
-                messageViewModels.add(new MessageViewModel(messagePackage));
-                InboxRepository.this.messageViewModels.postValue(messageViewModels);
+                if (MessageViewModel.isConvertible(messagePackage)) {
+                    List<MessageViewModel> messageViewModels = InboxRepository.this.messageViewModels.getValue();
+                    messageViewModels.add(new MessageViewModel(messagePackage, uuid));
+                    InboxRepository.this.messageViewModels.postValue(messageViewModels);
+                }
             }
             @Override
             public void status(PubNub pubnub, PNStatus pnStatus) {}
@@ -88,14 +90,13 @@ public class InboxRepository {
     }
 
     public void fetchMessage(String channelName) {
-        pubnub.history()
-                .channel(channelName)
-                .count(10)
+        pubnub.history().channel(channelName).count(10)
                 .async((result, status) -> {
                     List<MessageViewModel> messageViewModels = InboxRepository.this.messageViewModels.getValue();
                     for (PNHistoryItemResult messageItem : result.getMessages()) {
-                        if (MessageViewModel.isMessage(messageItem.getEntry().getAsJsonObject())) {
-                            messageViewModels.add(new MessageViewModel(messageItem.getEntry().getAsJsonObject()));
+                        if (MessageViewModel.isConvertible(messageItem.getEntry().getAsJsonObject())) {
+                            messageViewModels.add(new MessageViewModel(
+                                    messageItem.getEntry().getAsJsonObject(), uuid));
                         }
                     }
                     InboxRepository.this.messageViewModels.postValue(messageViewModels);

@@ -1,7 +1,6 @@
 package com.hcmus.android.weshare.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -13,7 +12,7 @@ import com.hcmus.android.weshare.viewmodel.MessageViewModel;
 
 import java.util.List;
 
-public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.MyAdapter>{
+public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.MyAdapter> {
 
     private final List<MessageViewModel> data;
     private final Context context;

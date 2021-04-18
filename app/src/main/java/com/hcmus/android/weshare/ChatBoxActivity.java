@@ -78,21 +78,11 @@ public class ChatBoxActivity extends AppCompatActivity {
 
     private void setReceiverTextName() {
         TextView receiverName = findViewById(R.id.chatbox_name);
-        if (toUser.getDisplayName() != null) {
-            receiverName.setText(toUser.getDisplayName());
-        } else {
-            receiverName.setText(toUser.getEmail());
-        }
+        receiverName.setText(toUser.getDisplayName());
     }
 
     public void sendMessageButtonClick(View view) {
-        if (fromUser.getDisplayName() != null) {
-            inboxViewModel.sendMessage(fromUser.getDisplayName(),
-                    messageEditText.getText().toString(), channelName);
-        } else {
-            inboxViewModel.sendMessage(fromUser.getEmail(),
-                    messageEditText.getText().toString(), channelName);
-        }
+        inboxViewModel.sendMessage(fromUser, messageEditText.getText().toString(), channelName);
         disableEditTextFocus();
     }
 

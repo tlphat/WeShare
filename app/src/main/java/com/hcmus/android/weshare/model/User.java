@@ -21,6 +21,7 @@ public class User implements Parcelable {
             return new User[size];
         }
     };
+
     private String email;
     private String displayName;
     private String dob;
@@ -30,6 +31,7 @@ public class User implements Parcelable {
     public User(String id, String email) {
         this.id = id;
         this.email = email;
+        this.displayName = email;
     }
 
     protected User(Parcel in) {

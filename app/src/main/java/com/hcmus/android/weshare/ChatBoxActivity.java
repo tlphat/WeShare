@@ -93,4 +93,8 @@ public class ChatBoxActivity extends AppCompatActivity {
                 InputMethodManager.HIDE_NOT_ALWAYS);
         messageEditText.setText("");
     }
+
+    public void clearChatHistoryButtonClick(View view) {
+        inboxViewModel.clearChatHistory(channelName);
+    }
 }

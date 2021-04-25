@@ -1,7 +1,9 @@
 package com.hcmus.android.weshare.repository;
 
 import android.content.Context;
+import android.util.Log;
 
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -28,6 +30,7 @@ import java.util.List;
 
 public class InboxRepository {
 
+    private final String TAG = getClass().getSimpleName();
     private final String uuid;
     private final Context context;
 
@@ -46,7 +49,11 @@ public class InboxRepository {
         pubnub = new PubNub(config);
         pubnub.addListener(new SubscribeCallback() {
             @Override
-            public void message(PubNub pubnub, PNMessageResult message) {
+            public void message(@Nullable PubNub pubnub, @Nullable PNMessageResult message) {
+                if (message == null) {
+                    Log.e(TAG, "Empty message received");
+                    return;
+                }
                 JsonObject messagePackage = message.getMessage().getAsJsonObject();
                 if (MessageViewModel.isConvertible(messagePackage)) {
                     List<MessageViewModel> messageViewModels = InboxRepository.this.messageViewModels.getValue();
@@ -54,22 +61,38 @@ public class InboxRepository {
                     InboxRepository.this.messageViewModels.postValue(messageViewModels);
                 }
             }
+
             @Override
-            public void status(PubNub pubnub, PNStatus pnStatus) {}
+            public void status(@Nullable PubNub pubnub, @Nullable PNStatus pnStatus) {
+            }
+
             @Override
-            public void presence(PubNub pubnub, PNPresenceEventResult pnPresenceEventResult) {}
+            public void presence(@Nullable PubNub pubnub, @Nullable PNPresenceEventResult pnPresenceEventResult) {
+            }
+
             @Override
-            public void signal(PubNub pubnub, PNSignalResult pnSignalResult) {}
+            public void signal(@Nullable PubNub pubnub, @Nullable PNSignalResult pnSignalResult) {
+            }
+
             @Override
-            public void uuid(PubNub pubnub, PNUUIDMetadataResult pnUUIDMetadataResult) {}
+            public void uuid(@Nullable PubNub pubnub, @Nullable PNUUIDMetadataResult pnUUIDMetadataResult) {
+            }
+
             @Override
-            public void channel(PubNub pubnub, PNChannelMetadataResult pnChannelMetadataResult) {}
+            public void channel(@Nullable PubNub pubnub, @Nullable PNChannelMetadataResult pnChannelMetadataResult) {
+            }
+
             @Override
-            public void membership(PubNub pubnub, PNMembershipResult pnMembershipResult) {}
+            public void membership(@Nullable PubNub pubnub, @Nullable PNMembershipResult pnMembershipResult) {
+            }
+
             @Override
-            public void messageAction(PubNub pubnub, PNMessageActionResult pnMessageActionResult) {}
+            public void messageAction(@Nullable PubNub pubnub, @Nullable PNMessageActionResult pnMessageActionResult) {
+            }
+
             @Override
-            public void file(PubNub pubnub, PNFileEventResult pnFileEventResult) {}
+            public void file(@Nullable PubNub pubnub, @Nullable PNFileEventResult pnFileEventResult) {
+            }
         });
     }
 
@@ -111,4 +134,12 @@ public class InboxRepository {
         return messageViewModels;
     }
 
+    public void clearChatHistory(String channelName) {
+        pubnub.deleteMessages().channels(Collections.singletonList(channelName))
+                .async((result, status) -> {
+                    List<MessageViewModel> messageViewModels = InboxRepository.this.messageViewModels.getValue();
+                    messageViewModels.clear();
+                    InboxRepository.this.messageViewModels.postValue(messageViewModels);
+                });
+    }
 }

@@ -45,4 +45,8 @@ public class InboxViewModel extends AndroidViewModel {
     public void fetchMessages(String channelName) {
         inboxRepository.fetchMessage(channelName);
     }
+
+    public void clearChatHistory(String channelName) {
+        inboxRepository.clearChatHistory(channelName);
+    }
 }

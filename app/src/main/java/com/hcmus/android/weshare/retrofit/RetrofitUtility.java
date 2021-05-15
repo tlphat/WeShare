@@ -11,7 +11,7 @@ public class RetrofitUtility extends Application {
     private static final RetrofitUtility INSTANCE = new RetrofitUtility();
     private static Retrofit retrofit;
     private final String TAG = getClass().getSimpleName();
-    private final String BASE_URL = "https://weshare-springboot.herokuapp.com/";
+    private final String BASE_URL = "https://weshare-api.herokuapp.com/";
 
     private RetrofitUtility() {
         okhttp3.OkHttpClient client = new okhttp3.OkHttpClient.Builder().build();

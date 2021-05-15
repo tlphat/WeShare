@@ -18,6 +18,9 @@ public interface ApiInterface {
     @GET("users/{uid}")
     Call<User> getUser(@Path("uid") String uid);
 
+    @GET("users/name/{name}")
+    Call<List<User>> getUsersByName(@Path("name") String displayName);
+
     @POST("users")
     Call<User> saveUser(@Body User user);
 }

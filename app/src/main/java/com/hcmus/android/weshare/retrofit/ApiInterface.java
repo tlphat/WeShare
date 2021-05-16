@@ -1,5 +1,6 @@
 package com.hcmus.android.weshare.retrofit;
 
+import com.hcmus.android.weshare.model.Channel;
 import com.hcmus.android.weshare.model.User;
 import com.hcmus.android.weshare.viewmodel.ContactViewModel;
 
@@ -23,4 +24,7 @@ public interface ApiInterface {
 
     @POST("users")
     Call<User> saveUser(@Body User user);
+
+    @POST("channels")
+    Call<Channel> saveContact(@Body Channel channel);
 }

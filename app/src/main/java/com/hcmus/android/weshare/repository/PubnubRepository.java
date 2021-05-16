@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.google.gson.JsonObject;
 import com.hcmus.android.weshare.R;
+import com.hcmus.android.weshare.model.User;
 import com.pubnub.api.PNConfiguration;
 import com.pubnub.api.PubNub;
 
@@ -48,4 +49,6 @@ public abstract class PubnubRepository {
                 .async((result, status) -> {
                 });
     }
+
+    public abstract void addContact(User fromUser, User toUser);
 }

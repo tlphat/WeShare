@@ -2,6 +2,7 @@ package com.hcmus.android.weshare;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
@@ -72,6 +73,15 @@ public class ContactActivity extends AppCompatActivity implements ContactListAda
         intent.putExtra("to_user", friendList.getValue().get(position).getUser());
         intent.putExtra("channel_id", "private_"
                 + friendList.getValue().get(position).getConnectionID());
+        startActivity(intent);
+    }
+
+    public void searchUserButtonClick(View view) {
+        navigateToSearchUSer();
+    }
+
+    private void navigateToSearchUSer() {
+        Intent intent = new Intent(this, AddFriendActivity.class);
         startActivity(intent);
     }
 }

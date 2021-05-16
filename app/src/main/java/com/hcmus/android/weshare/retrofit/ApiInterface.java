@@ -12,7 +12,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface ApiInterface {
-    @GET("channels/{uid}")
+    @GET("users/{uid}/friends")
     Call<List<ContactViewModel>> getContacts(@Path("uid") String uid);
 
     @GET("users/{uid}")

@@ -8,9 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.gson.JsonObject;
-import com.hcmus.android.weshare.R;
 import com.hcmus.android.weshare.viewmodel.MessageViewModel;
-import com.pubnub.api.PNConfiguration;
 import com.pubnub.api.PubNub;
 import com.pubnub.api.callbacks.SubscribeCallback;
 import com.pubnub.api.models.consumer.PNStatus;
@@ -28,25 +26,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class InboxRepository {
+public class InboxRepository extends PubnubRepository {
 
     private final String TAG = getClass().getSimpleName();
-    private final String uuid;
-    private final Context context;
-
-    private PubNub pubnub;
     private final MutableLiveData<List<MessageViewModel>> messageViewModels = new MutableLiveData<>();
 
     public InboxRepository(Context context, String uuid) {
-        this.context = context;
-        this.uuid = uuid;
-        PNConfiguration config = initPubNubConfig();
-        initPubNub(config);
+        super(context, uuid);
         messageViewModels.setValue(new ArrayList<>());
     }
 
-    private void initPubNub(PNConfiguration config) {
-        pubnub = new PubNub(config);
+    @Override
+    protected void handlePubnubMessage() {
         pubnub.addListener(new SubscribeCallback() {
             @Override
             public void message(@Nullable PubNub pubnub, @Nullable PNMessageResult message) {
@@ -96,22 +87,6 @@ public class InboxRepository {
         });
     }
 
-    private PNConfiguration initPubNubConfig() {
-        PNConfiguration pnConfiguration = new PNConfiguration();
-        pnConfiguration.setSubscribeKey(context.getString(R.string.pubnub_subscribe_key));
-        pnConfiguration.setPublishKey(context.getString(R.string.pubnub_publish_key));
-        pnConfiguration.setUuid(uuid);
-        return pnConfiguration;
-    }
-
-    public void sendMessage(JsonObject msg, String channelName) {
-        pubnub.publish()
-                .message(msg)
-                .channel(channelName)
-                .async((result, status) -> {
-                });
-    }
-
     public void fetchMessage(String channelName) {
         pubnub.history().channel(channelName).count(10)
                 .async((result, status) -> {
@@ -124,10 +99,6 @@ public class InboxRepository {
                     }
                     InboxRepository.this.messageViewModels.postValue(messageViewModels);
                 });
-    }
-
-    public void registerChannel(String channelName) {
-        pubnub.subscribe().channels(Collections.singletonList(channelName)).execute();
     }
 
     public LiveData<List<MessageViewModel>> getMessageViewModels() {

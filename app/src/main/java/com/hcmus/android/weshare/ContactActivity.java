@@ -76,6 +76,13 @@ public class ContactActivity extends AppCompatActivity implements ContactListAda
         startActivity(intent);
     }
 
+    @Override
+    public void onClickImage(User user) {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        intent.putExtra("user", user);
+        startActivity(intent);
+    }
+
     public void searchUserButtonClick(View view) {
         navigateToSearchUser();
     }

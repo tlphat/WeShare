@@ -22,6 +22,7 @@
             android:layout_height="100dp"
             android:src = "@drawable/dummy_avatar"
             android:scaleType="fitCenter"
+            android:id="@+id/user_avatar"
             android:background="@null"/>
 
         <TextView

@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hcmus.android.weshare.databinding.ContactBinding;
+import com.hcmus.android.weshare.model.User;
 import com.hcmus.android.weshare.viewmodel.ContactViewModel;
 
 import java.util.List;
@@ -49,6 +50,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 
     public interface OnItemClick {
         void onContactItemClick(int position);
+        void onClickImage(User user);
     }
 
     public class MyAdapter extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -61,6 +63,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             this.contactBinding = contactBinding;
             this.itemClick = itemClick;
             contactBinding.contactRow.setOnClickListener(this);
+            contactBinding.userAvatar.setOnClickListener(view -> itemClick.onClickImage(this.contactBinding.getViewModel().getUser()));
         }
 
         public void bind(ContactViewModel contactViewModel) {

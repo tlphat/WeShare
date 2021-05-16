@@ -10,17 +10,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 
 import com.google.firebase.auth.FirebaseUser;
-import com.hcmus.android.weshare.RegisterActivity;
+import com.hcmus.android.weshare.model.User;
 import com.hcmus.android.weshare.repository.AuthenticationRepository;
 
 public class AuthenticationViewModel extends AndroidViewModel {
 
     private final AuthenticationRepository authenticationRepository;
     private final LiveData<FirebaseUser> userMutableLiveData;
+    private final LiveData<User> user;
 
     /** The shared preferences are used to store latest login information */
     private SharedPreferences latestLoginPreferences;
@@ -30,6 +29,7 @@ public class AuthenticationViewModel extends AndroidViewModel {
         super(application);
         authenticationRepository = new AuthenticationRepository(application);
         userMutableLiveData = authenticationRepository.getUserMutableLiveData();
+        user = authenticationRepository.getUser();
         initSharePreferences(application);
     }
 
@@ -76,5 +76,17 @@ public class AuthenticationViewModel extends AndroidViewModel {
 
     public LiveData<String> getUserPassword() {
         return authenticationRepository.getUserPassword();
+    }
+
+    public void loadUserInfoFromDB() {
+        authenticationRepository.loadUserInfoFromDB();
+    }
+
+    public void saveUserInfoToDB() {
+        authenticationRepository.saveUserInfoToDB();
+    }
+
+    public LiveData<User> getUser() {
+        return user;
     }
 }

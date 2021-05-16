@@ -1,14 +1,14 @@
 package com.hcmus.android.weshare;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.hcmus.android.weshare.viewmodel.AuthenticationViewModel;
 
@@ -31,9 +31,11 @@ public class RegisterActivity extends AppCompatActivity {
         authenticationViewModel = new ViewModelProvider(this).get(AuthenticationViewModel.class);
         authenticationViewModel.getUserMutableLiveData().observe(RegisterActivity.this, firebaseUser -> {
             if (firebaseUser != null) {
-                navigateBackToLoginActivity();
+                authenticationViewModel.saveUserInfoToDB();
             }
         });
+        authenticationViewModel.getUser().observe(RegisterActivity.this,
+                user -> navigateBackToLoginActivity());
     }
 
     private void navigateBackToLoginActivity() {

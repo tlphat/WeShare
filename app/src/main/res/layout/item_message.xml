@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data class = "MessageBinding">
+        <variable
+            name="viewModel"
+            type="com.hcmus.android.weshare.viewmodel.MessageViewModel" />
+    </data>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="left"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/emailTxt"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:text="@{viewModel.identity}" />
+
+            <TextView
+                android:id="@+id/messageTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.content}"
+                android:textSize="20sp"
+                android:background="@drawable/message_background"/>
+
+        </LinearLayout>
+</layout>

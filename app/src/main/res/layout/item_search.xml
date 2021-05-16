@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data class = "SearchBinding">
+        <variable
+            name="viewModel"
+            type="com.hcmus.android.weshare.viewmodel.SearchItemViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/contactRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal"
+        android:layout_marginBottom="5dp">
+
+        <ImageButton
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src = "@drawable/dummy_avatar"
+            android:scaleType="fitCenter"
+            android:background="@null"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.user.email}"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/add_friend_button"
+                android:text="@string/add_friend_button_text"
+                />
+        </LinearLayout>
+
+
+    </LinearLayout>
+</layout>

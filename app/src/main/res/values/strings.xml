@@ -8,4 +8,20 @@
     <string name="register_button">Sign up</string>
     <string name="register_success_message">Register successfully!</string>
     <string name="login_success_message">Let\'s Share!</string>
+    <string name="pubnub_subscribe_key">sub-c-3a110a32-9483-11eb-8d7b-b642bba3de20</string>
+    <string name="pubnub_publish_key">pub-c-6b9279dd-74e6-477c-89b6-114afbd0a266</string>
+    <string name="type_message_hint">Type your message here...</string>
+    <string name="search_friend_hint">Enter your friend\'s name</string>
+    <string name="title_activity_search_friend">SearchFriendActivity</string>
+    <string name="add_friend_button_text">ADD</string>
+    <string name="add_friend_activity_button_text">ADD A NEW FRIEND</string>
+
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>

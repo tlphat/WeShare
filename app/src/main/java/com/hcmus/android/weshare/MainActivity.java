@@ -1,19 +1,15 @@
 package com.hcmus.android.weshare;
 
+import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-
-import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Build;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import com.hcmus.android.weshare.viewmodel.AuthenticationViewModel;
 
@@ -46,9 +42,20 @@ public class MainActivity extends AppCompatActivity {
         authenticationViewModel.getUserMutableLiveData().observe(this, firebaseUser -> {
             if (firebaseUser != null) {
                 storeLoginInfo();
-                Toast.makeText(MainActivity.this, R.string.login_success_message, Toast.LENGTH_LONG).show();
+                authenticationViewModel.loadUserInfoFromDB();
             }
         });
+        authenticationViewModel.getUser().observe(this, user -> {
+            if (user != null) {
+                navigateToContactList();
+            }
+        });
+    }
+
+    private void navigateToContactList() {
+        Intent intent = new Intent(this, ContactActivity.class);
+        intent.putExtra("user", authenticationViewModel.getUser().getValue());
+        startActivity(intent);
     }
 
     private void storeLoginInfo() {

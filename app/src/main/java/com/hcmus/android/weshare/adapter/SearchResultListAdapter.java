@@ -1,17 +1,12 @@
 package com.hcmus.android.weshare.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.hcmus.android.weshare.databinding.ContactBinding;
 import com.hcmus.android.weshare.databinding.SearchBinding;
-import com.hcmus.android.weshare.viewmodel.ContactViewModel;
 import com.hcmus.android.weshare.viewmodel.SearchItemViewModel;
 
 import java.util.List;
@@ -20,11 +15,11 @@ public class SearchResultListAdapter extends RecyclerView.Adapter<SearchResultLi
 
     private List<SearchItemViewModel> data;
     private LayoutInflater inflater;
-    private Context context;
+    private final OnItemClick itemClick;
 
-    public SearchResultListAdapter(List<SearchItemViewModel> data, Context context) {
+    public SearchResultListAdapter(List<SearchItemViewModel> data, OnItemClick itemClick) {
         this.data = data;
-        this.context = context;
+        this.itemClick = itemClick;
     }
 
     @NonNull
@@ -42,6 +37,10 @@ public class SearchResultListAdapter extends RecyclerView.Adapter<SearchResultLi
         holder.bind(data.get(position));
     }
 
+    public interface OnItemClick {
+        void onContactItemClick(SearchItemViewModel searchItem);
+    }
+
     @Override
     public int getItemCount() {
         return data.size();
@@ -54,13 +53,13 @@ public class SearchResultListAdapter extends RecyclerView.Adapter<SearchResultLi
     public class MyAdapter extends RecyclerView.ViewHolder {
 
         private final SearchBinding searchBinding;
-        private Button addFriendButton;
 
         public MyAdapter(SearchBinding searchBinding) {
             super(searchBinding.getRoot());
             this.searchBinding = searchBinding;
+            this.searchBinding.addFriendButton.setOnClickListener(v -> itemClick
+                    .onContactItemClick(this.searchBinding.getViewModel()));
         }
-
 
         public void bind(SearchItemViewModel searchItemViewModel) {
             this.searchBinding.setViewModel(searchItemViewModel);
@@ -69,6 +68,5 @@ public class SearchResultListAdapter extends RecyclerView.Adapter<SearchResultLi
         public SearchBinding getSearchBinding() {
             return searchBinding;
         }
-
     }
 }

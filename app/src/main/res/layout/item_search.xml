@@ -41,7 +41,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/add_friend_button"
                 android:text="@string/add_friend_button_text"
-                android:onClick="addFriendButtonClick"
                 />
         </LinearLayout>
 

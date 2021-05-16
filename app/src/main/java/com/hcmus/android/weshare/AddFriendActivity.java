@@ -1,25 +1,24 @@
 package com.hcmus.android.weshare;
 
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.SearchView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-import android.widget.SearchView;
-
-import com.hcmus.android.weshare.adapter.ContactListAdapter;
 import com.hcmus.android.weshare.adapter.SearchResultListAdapter;
-import com.hcmus.android.weshare.model.User;
-import com.hcmus.android.weshare.viewmodel.ContactListViewModel;
-import com.hcmus.android.weshare.viewmodel.ContactViewModel;
 import com.hcmus.android.weshare.viewmodel.SearchItemViewModel;
 import com.hcmus.android.weshare.viewmodel.SearchResultListViewModel;
 
 import java.util.List;
 
-public class AddFriendActivity extends AppCompatActivity {
+public class AddFriendActivity extends AppCompatActivity implements SearchResultListAdapter.OnItemClick {
+
+    private final String TAG = getClass().getSimpleName();
 
     private SearchView friendSearchView;
     private SearchResultListViewModel searchResultListViewModel;
@@ -36,7 +35,7 @@ public class AddFriendActivity extends AppCompatActivity {
     }
 
     private void initViewModel() {
-        friendSearchView = (SearchView) findViewById(R.id.search_friend_bar);
+        friendSearchView = findViewById(R.id.search_friend_bar);
         searchResultListViewModel = new ViewModelProvider(this).get(SearchResultListViewModel.class);
         searchResultListViewModel.initRepository();
     }
@@ -71,5 +70,10 @@ public class AddFriendActivity extends AppCompatActivity {
 
     private void retrieveUsers(String name) {
         searchResultListViewModel.retrieveUsers(name);
+    }
+
+    @Override
+    public void onContactItemClick(SearchItemViewModel searchItem) {
+        Log.e(TAG, searchItem.getUser().getEmail());
     }
 }

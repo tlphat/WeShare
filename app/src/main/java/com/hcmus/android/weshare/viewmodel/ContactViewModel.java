@@ -4,10 +4,12 @@ import com.hcmus.android.weshare.model.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 @AllArgsConstructor
 public class ContactViewModel {
-    private final String connectionID = "dummy";
-    private final User user;
+    private String connectionID = "dummy";
+    private User user;
 }

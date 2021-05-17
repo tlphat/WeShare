@@ -34,6 +34,11 @@ public class ContactActivity extends AppCompatActivity implements ContactListAda
         initViewModel();
         handleListFromViewModel();
         initComponents();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         retrieveFriends();
     }
 

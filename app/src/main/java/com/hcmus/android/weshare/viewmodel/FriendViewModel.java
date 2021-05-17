@@ -16,7 +16,7 @@ public class FriendViewModel extends AndroidViewModel {
         super(application);
     }
 
-    public void initRepository(String uuid) {
+    public void initRepository() {
         friendRepository = new FriendRepository();
     }
 

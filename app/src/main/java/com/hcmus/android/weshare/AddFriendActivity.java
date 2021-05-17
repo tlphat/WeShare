@@ -48,6 +48,7 @@ public class AddFriendActivity extends AppCompatActivity implements SearchResult
         searchResultListViewModel = new ViewModelProvider(this).get(SearchResultListViewModel.class);
         searchResultListViewModel.initRepository();
         friendViewModel = new ViewModelProvider(this).get(FriendViewModel.class);
+        friendViewModel.initRepository();
     }
 
     private void initComponents() {

@@ -10,6 +10,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface ApiInterface {
@@ -27,4 +28,7 @@ public interface ApiInterface {
 
     @POST("channels")
     Call<Channel> saveContact(@Body Channel channel);
+
+    @PUT("users/{uid}")
+    Call<User> updateUser(@Path("uid") String uid, @Body User user);
 }

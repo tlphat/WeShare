@@ -9,13 +9,21 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/contact_list_layout"/>
+        android:id="@+id/contact_list_layout" />
+
     <Button
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:text="@string/add_friend_activity_button_text"
-        android:onClick="searchUserButtonClick">
+        android:onClick="searchUserButtonClick" />
 
-    </Button>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:onClick="viewProfileButtonClick"
+        android:text="VIEW PROFILE" />
+
 </RelativeLayout>

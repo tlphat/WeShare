@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hcmus.android.weshare.adapter.ContactListAdapter;
 import com.hcmus.android.weshare.model.User;
+import com.hcmus.android.weshare.viewmodel.AuthenticationViewModel;
 import com.hcmus.android.weshare.viewmodel.ContactListViewModel;
 import com.hcmus.android.weshare.viewmodel.ContactViewModel;
 
@@ -20,6 +21,8 @@ import java.util.List;
 public class ContactActivity extends AppCompatActivity implements ContactListAdapter.OnItemClick {
 
     private final String TAG = getClass().getSimpleName();
+
+    private AuthenticationViewModel viewModel;
 
     private ContactListViewModel contactListViewModel;
     private ContactListAdapter contactListAdapter;
@@ -95,6 +98,13 @@ public class ContactActivity extends AppCompatActivity implements ContactListAda
     private void navigateToSearchUser() {
         Intent intent = new Intent(this, AddFriendActivity.class);
         intent.putExtra("from_user", user);
+        startActivity(intent);
+    }
+
+    public void viewProfileButtonClick(View view) {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        intent.putExtra("user", user);
+        intent.putExtra("is_current", true);
         startActivity(intent);
     }
 }

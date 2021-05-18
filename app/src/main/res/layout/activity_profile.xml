@@ -33,7 +33,7 @@
             <TextView
                 android:textStyle="bold"
                 android:textSize="20sp"
-                android:text="@{user.displayName}"
+                android:text="@={user.displayName}"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content" />
         </LinearLayout>
@@ -68,10 +68,11 @@
                     android:textColor="@color/design_default_color_secondary_variant"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"/>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{user.dob}"/>
+                    android:text="@={user.dob}" />
             </LinearLayout>
 
             <LinearLayout
@@ -83,14 +84,24 @@
                     android:text="Gender"
                     android:textColor="@color/design_default_color_secondary_variant"
                     android:layout_height="wrap_content"
-                    android:layout_width="match_parent"/>
+                    android:layout_width="match_parent" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{user.gender}"/>
+                    android:text="@={user.gender}" />
             </LinearLayout>
 
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/edit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:onClick="editProfileButtonClick"
+            android:text="Edit" />
     </RelativeLayout>
 </layout>
